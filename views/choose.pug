@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  - var image_names = ['hat1.jpg', 'hat2.webp', 'hat3.jpg', 'hats4.jpg', 'hat5.jpg'];
+  div.d-flex.flex-column
+  //add a loop that iterates 3 times
+  - for(var i = 0; i < 3; i++) {
+      - var randomIndex = Math.floor(Math.random() * 5);
+      img(src=`/images/${image_names[randomIndex]}`, alt = "Does not found image." width = 300, height = 300)
+  - } 
