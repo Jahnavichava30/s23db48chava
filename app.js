@@ -3,14 +3,40 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var mongoose = require('mongoose');
+
+require('dotenv').config();
+const connectionString = process.env.MONGO_CON
+
+mongoose.connect(connectionString);  
+var db = mongoose.connection;  
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once('open', function(){
+  console.log('Connection to DB succeeded');
+});
+
+const { recreateDB } = require('./routes/seed');
+ 
+var app = express();
+app.post('/seed-database', async (req, res) => {
+  try {
+    await recreateDB();
+    res.status(200).send('Database seeded successfully');
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error seeding database');
+  }
+});
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var HatsRouter = require('./routes/Hats');
 var boardRouter = require('./routes/board');
 var chooseRouter = require('./routes/choose');
+var costumeRouter = require('./models/costume');
+var resourceRouter = require('./routes/resource');
 
-var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -27,7 +53,8 @@ app.use('/users', usersRouter);
 app.use('/Hats', HatsRouter);
 app.use('/board',boardRouter);
 app.use('/choose',chooseRouter);
-
+app.use('/costume',costumeRouter);
+app.use('/resource', resourceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
