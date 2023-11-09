@@ -10,6 +10,19 @@ exports.costume_list = async function (req, res) {
     }
 };
 
+// VIEWS
+// Handle a show all view
+exports.costume_view_all_Page = async function(req, res) {
+    try{
+    results = await Costume.find();
+    res.render('Hats', { title: 'Costume Search Results', results: results });
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
+
 // for a specific Costume.
 exports.costume_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: Costume detail: ' + req.params.id);

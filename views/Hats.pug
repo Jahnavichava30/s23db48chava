@@ -1,29 +1,22 @@
-extends layout
-
 block content
   h1= title
-
-  div.container-fluid
-    div.row
-
-      - let hats = [{ hat_style: "Fedora",hat_color: "red", hat_price: 10.9},{hat_style: "Baseball Cap",hat_color: "white",hat_price: 13.89},{hat_style: "Top Hat",hat_color: "black",hat_price: 14.9}];
-      - for(let i = 0; i < hats .length; i++){
-          div(class="col-sm-2", onclick = `buy(${i})`, id=`Hats-${i}`) 
-            p hat_style: #{hats[i].hat_style}
-            p hat_color: #{hats[i].hat_color}
-            p hat_price: $#{hats[i].hat_price}
-          script.
-            document.getElementById(`Hats-${i}`).addEventListener('click', function() {
-              buy(i); 
+ 
+  div(class="container-fluid")
+    div(class="row")
+      - for(let i = 0; i < results.length; i++){
+        div(class="col-sm-2", style = 'cursor: pointer;', id = `res-${i}`)
+          p HatsName: #{results[i].costume_type}
+          p Hatscost: $#{results[i].cost}
+          p HatsSize: #{results[i].size}
+ 
+        script.
+          (function(index) {
+            document.getElementById(`res-${index}`).addEventListener('click', function() {
+              buy(index);
             });
+          })(i);
       - }
-      script.
-        function buy(index){
-          alert(`You purchased item ${index}`)
-        }
-
-
-      
-
-         
-
+    script.
+      function buy(index){
+        alert(`You purchased item ${index}`)
+      }
