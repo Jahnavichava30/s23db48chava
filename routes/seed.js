@@ -1,9 +1,9 @@
-const Costume = require('../models/costume');
+const Hats = require('../models/hats');
  
 async function recreateDB() {
-    await Costume.deleteMany();
+    await Hats.deleteMany();
  
-    let instance1 = new Costume({
+    let instance1 = new Hats({
       costume_type: "Fedora",
       size: 'Free Size',
       cost: 10.9
@@ -17,7 +17,7 @@ async function recreateDB() {
         console.error(err);
       });
  
-      let instance2 = new Costume({
+      let instance2 = new Hats({
         costume_type: "Baseball Cap",
         size: 'Free Size',
         cost: 13.89
@@ -31,7 +31,7 @@ async function recreateDB() {
           console.error(err);
         });
  
-        let instance3 = new Costume({
+        let instance3 = new Hats({
             costume_type: "Top Hat",
             size: 'Free Size',
             cost: 14.9
