@@ -50,7 +50,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/Hats', HatsRouter);
+app.use('/hats', HatsRouter);
 app.use('/board',boardRouter);
 app.use('/choose',chooseRouter);
 app.use('/costume',costumeRouter);
