@@ -1,4 +1,5 @@
 var Costume = require('../models/hats');
+const ObjectId = require('mongodb').ObjectId;
 // List of all Costumes
 exports.costume_list = async function (req, res) {
     try {
@@ -92,5 +93,20 @@ res.send(result)
 res.status(500)
 res.send(`{"error": ${err}: Update for id ${req.params.id}
 failed`);
+}
+};
+
+// Handle a show one view with id specified by query
+exports.costume_view_one_Page = async function(req, res) {
+console.log("single view for id " + req.query.id)
+try{
+    const id = new ObjectId(req.query.id);
+result = await Costume.findById(id)
+res.render('hatdetail',
+{ title: 'Hat Detail', result: result });
+}
+catch(err){
+res.status(500)
+res.send(`{'error': '${err}'}`);
 }
 };
