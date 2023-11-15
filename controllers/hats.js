@@ -139,3 +139,18 @@ exports.costume_update_Page = async function(req, res) {
     res.send(`{'error': '${err}'}`);
     }
    };
+
+   // Handle a delete one view with id from query
+exports.costume_delete_Page = async function(req, res) {
+    const id = new ObjectId(req.query.id);
+    console.log("Delete view for id " + id)
+    try{
+    result = await Costume.findById(id)
+    res.render('hatdelete', { title: 'Hat Delete', result:
+   result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+   };
