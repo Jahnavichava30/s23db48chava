@@ -2,42 +2,47 @@ extends layout
 
 block content
   h1= title
-  - let costumeid = result._id
-  - let costume_type = result.costume_type
-  - let costumecost = result.cost
-  - let costumesize = result.size
 
-  div.row(class='mb-2')
-    div.mr-1 ID is
-    div #{costumeid}
+  if result == null
+    h2 No instance to show
+  else
 
-  - let actionid = "/resource/hats/" + costumeid
-  form(id='HatForm', action= actionid, method="PUT")
-    div.form-group
-      label.costumeAttr(for='costume_type') Hat type
-      input#costume_type(type='text', name='costume_type', value= costume_type )
-    div.form-group
-      label.costumeAttr(for='size') Hat size
-      input#size(type='text', name='size', value= costumesize )
-    div.form-group
-      label.costumeAttr(for='cost') Hat cost
-      input#cost(type='number', name='cost', value= costumecost )
-    input(type="submit")
+    - let costumeid = result._id
+    - let costume_type = result.costume_type
+    - let costumecost = result.cost
+    - let costumesize = result.size
 
-  script.
-    document.forms['HatForm'].addEventListener('submit', (event) => {
-      event.preventDefault();
-      // TODO do something here to show user that form is being submitted
-      fetch(event.target.action, {
-        method: 'PUT',
-        body: new URLSearchParams(new FormData(event.target)) // event.target is the form
-      }).then((resp) => {
-        return resp.json(); // or resp.text() or whatever the server sends
-      }).then((body) => {
-        alert("hat Updated successfully")
-        // TODO handle body
-      }).catch((error) => {
-        // TODO handle error
-        alert("Update failed " + error )
+    div.row(class='mb-2')
+      div.col.mr-1 ID is
+        div #{costumeid}
+
+    - let actionid = "/resource/hats/" + costumeid
+    form(id='HatForm', action= actionid, method="PUT").needs-validation
+      div.form-group
+        label.costumeAttr(for='costume_type') Hat type
+        input#costume_type(type='text', name='costume_type', value= costume_type).form-control(required=true)
+      div.form-group
+        label.costumeAttr(for='size') Hat size
+        input#size(type='text', name='size', value= costumesize).form-control(required=true)
+      div.form-group
+        label.costumeAttr(for='cost') Hat cost
+        input#cost(type='number', name='cost', value= costumecost).form-control(required=true)
+      input(type="submit").btn.btn-primary
+
+    script.
+      document.forms['HatForm'].addEventListener('submit', (event) => {
+        event.preventDefault();
+        // TODO do something here to show user that the form is being submitted
+        fetch(event.target.action, {
+          method: 'PUT',
+          body: new URLSearchParams(new FormData(event.target)) // event.target is the form
+        }).then((resp) => {
+          return resp.json(); // or resp.text() or whatever the server sends
+        }).then((body) => {
+          alert("Hat Updated successfully");
+          // TODO handle body
+        }).catch((error) => {
+          // TODO handle error
+          alert("Update failed " + error);
+        });
       });
-    });

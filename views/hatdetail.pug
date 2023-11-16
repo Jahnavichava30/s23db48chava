@@ -1,20 +1,26 @@
 extends layout
+
 block content
- h1= title
- - let costumeid = result._id
- - let costume_type = result.costume_type
- - let costumecost = result.cost
- - let costumesize = result.size
- div
-    div.row
-        div(class='costumeAttr mr-3') Hat ID is:
+  h1= title
+
+  if result == null
+    h2 No instance to show
+  else
+    - let costumeid = result._id
+    - let costume_type = result.costume_type
+    - let costumecost = result.cost
+    - let costumesize = result.size
+
+    div
+      div.row
+        div.costumeAttr.mr-3 Hat ID is:
         div #{costumeid}
-    div.row
-        div(class='costumeAttr mr-3') Hat Type is:
+      div.row
+        div.costumeAttr.mr-3 Hat Type is:
         div #{costume_type}
-    div.row
-        div(class='costumeAttr mr-3') Hat Size is:
+      div.row
+        div.costumeAttr.mr-3 Hat Size is:
         div #{costumesize}
-    div.row
-        div(class='costumeAttr mr-3') Hat Cost is:
+      div.row
+        div.costumeAttr.mr-3 Hat Cost is:
         div #{costumecost}
