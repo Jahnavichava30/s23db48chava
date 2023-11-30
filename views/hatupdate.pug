@@ -38,10 +38,15 @@ block content
         }).then((resp) => {
           return resp.json(); // or resp.text() or whatever the server sends
         }).then((body) => {
-          alert("Hat Updated successfully");
+          if (body._id) {
+            alert("Hat Updated successfully");
+          }
+          else {
+            alert(body.error);
+          }
           // TODO handle the body
         }).catch((error) => {
           // TODO handle the error
-          alert("Update failed " + error);
+          alert("Update failed ");
         });
       });
