@@ -1,22 +1,27 @@
 extends layout
- 
+
 block content
   h1= title
-  - let hats = results;
- 
-  div(class="container-fluid")
-      each hat in hats
-        - let destination = `dispatch("/hatss/update?id=${hat._id}")`
-        div(class="col-sm-2")
-          p HatName: #{hat.costume_type}
-          p HatCost: $#{hat.cost}
-          p HatSize: #{hat.size}
-        button.btn.btn-sm.btn-primary.ml-1(onclick= destination) Update
-        br
-        br
- 
+  - let hats = results
+  - let create = `dispatch("/hats/create")`
+  button.btn.btn-sm.btn-primary.ml-1(onclick= create) Create
+
+  div.container-fluid
+    each hat in hats
+      - let destination = `dispatch("/hats/update?id=${hat._id}")`
+      - let detail = `dispatch("/hats/detail?id=${hat._id}")`
+      - let deleteD = `dispatch("/hats/delete?id=${hat._id}")`
+      div.col-sm-4.mb-3
+        div.card
+          div.card-body
+            h5.card-title Hat Name: #{hat.costume_type}
+            p.card-text Hat Cost: $#{hat.cost}
+            p.card-text Hat Size: #{hat.size}
+            button.btn.btn-info.btn-sm.ml-1(onclick= destination) Update
+            button.btn.btn-dark.btn-sm.ml-1(onclick= detail) Detail
+            button.btn.btn-warning.btn-sm.ml-1(onclick= deleteD) Delete
+
   script.
     function dispatch(path) {
       window.location.href = path;
     }
- 
